@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+    </style>
+    <!-- edittext 스타일 지정-->
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="colorControlNormal">@color/colorWhite</item> <!--포커스 되어있지 않은 경우의 밑줄 부분-->
+        <item name="colorControlActivated">@color/colorWhite</item> <!--손끝으로 터치되어 있는 부분. text selection handle라고 부른다고 한다-->
+        <item name="android:textCursorDrawable">@color/colorWhite</item> <!--커서 색. drawable 지정되지만, 색을 설정하는것도 된다-->
+        <item name="android:textColor">@color/colorWhite</item> <!--텍스트 색-->
+        <item name="android:textColorHint">@color/colorWhite</item> <!--입력전의 Hint (포커스 Holder)-->
+        <item name="android:textColorHighlight">@color/colorWhite</item> <!--텍스트 선택색-->
+
+    </style>
+
+    <style name="EditTextStart" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">@color/colorMain</item> <!--손끝으로 터치되어 있는 부분. text selection handle라고 부른다고 한다-->
+        <item name="android:textCursorDrawable">@color/colorAccent</item> <!--커서 색. drawable 지정되지만, 색을 설정하는것도 된다-->
+        <item name="colorAccent">@color/colorMain</item>
+
+    </style>
+
+</resources>

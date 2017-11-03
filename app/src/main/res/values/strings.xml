@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">FirebaseChat</string>
+
+    <!--SignPage-->
+    <string name="app_start_first_page">Start Copy Naver Line...</string>
+    <string name="app_signin">Sign in</string>
+    <string name="app_signup">Sign up</string>
+    <string name="app_sign_facebook">Log in with Facebook</string>
+    <string name="app_sign_google">Log in with Google</string>
+    <string name="app_phone_number">Phone Number</string>
+    <string name="app_sign_next">Next</string>
+</resources>

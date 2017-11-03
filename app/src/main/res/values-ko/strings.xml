@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FirebaseChat</string>
+    <string name="app_start_first_page">Start Copy Naver Line...</string>
+    <string name="app_signin">로그인</string>
+    <string name="app_signup">회원가입</string>
+    <string name="app_sign_facebook">페이스북으로 로그인</string>
+    <string name="app_phone_number">전화번호</string>
+</resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "672873440590",
+    "firebase_url": "https://asfasdf-9b947.firebaseio.com",
+    "project_id": "asfasdf-9b947",
+    "storage_bucket": "asfasdf-9b947.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672873440590:android:8dd8ad816fe331a2",
+        "android_client_info": {
+          "package_name": "com.example.kyung.firebasechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672873440590-gggcngbup7ms3dfchg94itnmbcak9l4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk3woDIOZkTpQvJ7suINZ_I4FaNcMiF0k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
