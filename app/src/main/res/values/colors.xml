@@ -6,6 +6,7 @@
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorOffFunction">#d6d7d7</color>
 
     <color name="colorMain">#4ecd00</color>
     <color name="colorMenu">#464e65</color>

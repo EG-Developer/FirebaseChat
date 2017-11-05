@@ -2,11 +2,17 @@
     <string name="app_name">FirebaseChat</string>
 
     <!--SignPage-->
-    <string name="app_start_first_page">Start Copy Naver Line...</string>
-    <string name="app_signin">Sign in</string>
-    <string name="app_signup">Sign up</string>
-    <string name="app_sign_facebook">Log in with Facebook</string>
-    <string name="app_sign_google">Log in with Google</string>
-    <string name="app_phone_number">Phone Number</string>
-    <string name="app_sign_next">Next</string>
+    <string name="sign_start_first_page">Start Copy Naver Line...</string>
+    <string name="sign_signin">Sign in</string>
+    <string name="sign_signup">Sign up</string>
+    <string name="sign_sign_facebook">Log in with Facebook</string>
+    <string name="sign_sign_google">Log in with Google</string>
+    <string name="sign_phone_number">Phone Number(010-****-****)</string>
+    <string name="sign_email">Email Address</string>
+    <string name="sign_password">Password</string>
+    <string name="sign_passwordRe">Password Repeat</string>
+    <string name="sign_name">Name (or NickName)</string>
+    <string name="sign_Authnumber">Authentication number (1111)</string>
+
+    <string name="sign_next">Next</string>
 </resources>

@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/whitebutton"
-            android:text="@string/app_signin" />
+            android:text="@string/sign_signin" />
 
         <Button
             android:id="@+id/btnSignUp"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/whitebutton"
-            android:text="@string/app_signup"
+            android:text="@string/sign_signup"
             android:textColor="@color/colorMain" />
     </LinearLayout>
 </LinearLayout>

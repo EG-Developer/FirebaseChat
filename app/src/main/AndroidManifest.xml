@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FirstActivity"
+        <activity
+            android:name=".FirstActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,9 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".sign.SigninActivity"
+        <activity
+            android:name=".sign.SigninActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".sign.SignupActivity"
+        <activity
+            android:name=".sign.SignupActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".main.MainActivity" />
         <activity android:name=".main.chat.chatdetail.ChatDetailActivity" />
@@ -27,7 +30,8 @@
         <activity android:name=".main.friend.menu.tab.ChangeStatusFriendActivity" />
         <activity android:name=".main.friend.menu.set.SetFriend" />
         <activity android:name=".main.chat.menu.makeroom.MakeRoomActivity" />
-        <activity android:name=".main.chat.menu.tab.RoomStatusChangeActivity"></activity>
+        <activity android:name=".main.chat.menu.tab.RoomStatusChangeActivity" />
+        <activity android:name=".sign.SignupNextActivity"></activity>
     </application>
 
 </manifest>

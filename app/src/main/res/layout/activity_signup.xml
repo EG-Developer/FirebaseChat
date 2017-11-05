@@ -1,74 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/SignUpTheme"
     tools:context="com.example.kyung.firebasechat.sign.SignupActivity">
 
-    <EditText
-        android:id="@+id/editSignPhone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/app_phone_number"
-        android:inputType="text|number"
-        android:shadowColor="@color/colorPrimaryDark"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:theme="@style/EditTextStart"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCountry" />
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:theme="@style/AppTheme">
 
-    <Spinner
-        android:id="@+id/spinnerCountry"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/spinnerCountry"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="72dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="인증은 할 수 없지만 전화번호는 받겠소이다."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSignPhone" />
+        <EditText
+            android:id="@+id/editSignPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/sign_phone_number"
+            android:inputType="text|number"
+            android:maxLength="13"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:theme="@style/EditTextStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerCountry" />
+
+        <EditText
+            android:id="@+id/editPutAuth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/sign_Authnumber"
+            android:inputType="textPersonName"
+            android:maxLength="4"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:theme="@style/EditTextStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editSignPhone" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="인증은 할 수 없지만 전화번호는 받겠소이다."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editPutAuth" />
 
 
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="0dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/colorMain"
-        android:text="@string/app_sign_next"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoogleSign"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="37dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/colorOffFunction"
+            android:enabled="false"
+            android:text="@string/sign_next"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnGoogleSign"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/btnFacebookSign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -77,15 +110,17 @@
 
     <Button
         android:id="@+id/btnFacebookSign"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginBottom="-1dp"
         android:layout_marginEnd="-1dp"
         android:layout_marginStart="-1dp"
         android:background="@drawable/whitebutton"
-        android:text="@string/app_sign_facebook"
+        android:layout_weight="1"
+        android:text="@string/sign_sign_facebook"
         android:textColor="@color/colorFacebook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

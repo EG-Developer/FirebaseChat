@@ -93,6 +93,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 break;
             default:
                 intent = new Intent(this, SignupActivity.class);
+                overridePendingTransition(R.anim.anim_slide_in_top, R.anim.anim_slide_in_bottom);
                 startActivity(intent);
                 break;
         }
