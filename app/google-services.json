@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "672873440590-c574ui67fd6o6gfkil4t4919iob5m038.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kyung.firebasechat",
+            "certificate_hash": "ac417f4966f792fcd0ffdc1059e37190fc513b37"
+          }
+        },
+        {
           "client_id": "672873440590-gggcngbup7ms3dfchg94itnmbcak9l4a.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672873440590-gggcngbup7ms3dfchg94itnmbcak9l4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

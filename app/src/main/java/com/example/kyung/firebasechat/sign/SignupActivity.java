@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -23,7 +24,7 @@ import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.util.ValidationUtil;
 import com.google.android.gms.common.SignInButton;
 
-public class SignupActivity extends AppCompatActivity implements View.OnFocusChangeListener {
+public class SignupActivity extends AppCompatActivity {
 
 
     private EditText editSignPhone;
@@ -44,13 +45,15 @@ public class SignupActivity extends AppCompatActivity implements View.OnFocusCha
         setContentView(R.layout.activity_signup);
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(imm.isAcceptingText()){
+
+        }
 
         initView();
         initSpinner();
         setEditPutAuth();
         setEditSignPhone();
         setBtnNext();
-        setFocusChange();
     }
 
     private void initView() {
@@ -120,7 +123,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnFocusCha
         editSignPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                setAuthButton();
                 if (isFormatting)
                     return;
 
@@ -183,7 +185,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnFocusCha
         editPutAuth.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                setAuthButton();
+
             }
 
             @Override
@@ -197,52 +199,5 @@ public class SignupActivity extends AppCompatActivity implements View.OnFocusCha
 
             }
         });
-    }
-    private void setFocusChange(){
-        editSignPhone.setOnFocusChangeListener(this);
-        editPutAuth.setOnFocusChangeListener(this);
-    }
-
-    private void setAuthButton() {
-        // focus 되어 있는 뷰를 가져옴
-        View cView = getCurrentFocus();
-        if (cView == null) {
-            Log.e("이상하네","========== 여기만 찍힘");
-            return;
-        } else {
-            Log.e("ddd", "==========" + cView.getId());
-        }
-        if (cView.getId() == R.id.editPutAuth) {
-            Log.e("확인", "================= 찍힘");
-            btnFacebookSign.setVisibility(View.GONE);
-            btnGoogleSign.setVisibility(View.GONE);
-        } else {
-            btnFacebookSign.setVisibility(View.VISIBLE);
-            btnGoogleSign.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        switch (v.getId()){
-            case R.id.editPutAuth:
-                if(hasFocus){
-                    btnFacebookSign.setVisibility(View.GONE);
-                    btnGoogleSign.setVisibility(View.GONE);
-                }
-                break;
-            case R.id.editSignPhone:
-                if(hasFocus){
-                    btnFacebookSign.setVisibility(View.GONE);
-                    btnGoogleSign.setVisibility(View.GONE);
-                }
-                break;
-            default:
-                if(hasFocus){
-                    btnFacebookSign.setVisibility(View.VISIBLE);
-                    btnGoogleSign.setVisibility(View.VISIBLE);
-                }
-                break;
-        }
     }
 }

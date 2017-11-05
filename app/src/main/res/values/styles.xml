@@ -9,21 +9,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">true</item>
         <item name="android:windowBackground">@color/colorWhite</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
-
-    <!-- 회원가입 theme. -->
-    <style name="SignUpTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">true</item>
-        <item name="android:windowBackground">@color/colorWhite</item>
-        <item name="android:windowSoftInputMode">adjustPan</item>
-    </style>
-
 
     <!-- edittext 스타일 지정 방법-->
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
