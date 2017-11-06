@@ -9,13 +9,14 @@ public class Const {
     public static final int req_signup_first = 123;
 
     // 불러올 Key 값 정의
-    public static final String key_id = "ID";
-    public static final String key_password = "PASSWORD";
-    public static final String key_email = "EMAIl";
-    public static final String key_phone = "PHONE";
-    public static final String key_name = "NAME";
+    public static final String key_id = "id";
+    public static final String key_token = "token";
+    public static final String key_password = "password";
+    public static final String key_email = "email";
+    public static final String key_phone = "phone_number";
+    public static final String key_name = "name";
     public static final String key_auto_sign = "AUTO_SIGN";
 
-    // database에 접근할 table 명 정의
+    // database의 table 명 정의
     public static final String table_user = "user";
 }

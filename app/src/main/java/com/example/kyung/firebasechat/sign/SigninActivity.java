@@ -13,6 +13,7 @@ import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.FirstActivity;
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.main.MainActivity;
+import com.example.kyung.firebasechat.util.ChangeUtil;
 import com.example.kyung.firebasechat.util.DialogUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class SigninActivity extends AppCompatActivity {
 
@@ -40,15 +42,15 @@ public class SigninActivity extends AppCompatActivity {
 
         // 인증 모듈 연결
         mAuth = FirebaseAuth.getInstance();
+        // 데이터베이스 user 레퍼런스 생성
+        database = FirebaseDatabase.getInstance();
+        userRef = database.getReference(Const.table_user);
 
         if(PreferenceUtil.getString(this,Const.key_auto_sign).equals("true")){
             String email = PreferenceUtil.getString(this,Const.key_email);
             String password = PreferenceUtil.getString(this,Const.key_password);
             signin(email,password);
         } else {
-            // 데이터베이스 user 레퍼런스 생성
-            database = FirebaseDatabase.getInstance();
-            userRef = database.getReference(Const.table_user);
             initView();
             setBtnSignin();
         }
@@ -95,6 +97,9 @@ public class SigninActivity extends AppCompatActivity {
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_email, email);
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_password, password);
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_auto_sign,"true");
+
+                                String refreshToken = FirebaseInstanceId.getInstance().getToken();
+                                userRef.child(ChangeUtil.changeMailFormat(email)).child(Const.key_token).setValue(refreshToken);
 
                                 // 로그인 진행
                                 Intent intent = new Intent(SigninActivity.this, MainActivity.class);

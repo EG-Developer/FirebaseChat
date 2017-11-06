@@ -10,6 +10,7 @@
 
     <color name="colorMain">#4ecd00</color>
     <color name="colorMenu">#464e65</color>
+    <color name="colorToolbar">#464e66</color>
     <color name="colorFacebook">#3d5c96</color>
     <color name="colorGooglePlus">#d94735</color>
 
