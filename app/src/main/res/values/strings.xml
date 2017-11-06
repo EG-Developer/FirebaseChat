@@ -20,5 +20,8 @@
     <string name="alert_ok">OK</string>
     <string name="alert_emailMsg">sending email is complete, please check your email</string>
     <string name="alert_emailMsgFail">sending email is false, please one more click button</string>
+    <string name="alert_checkEmail">please check your email</string>
+    <string name="alert_differentauth">id or password is not correct</string>
     <string name="alert_fail">error occur</string>
+    <string name="alert_overlapPhone">phone number is overlapped</string>
 </resources>

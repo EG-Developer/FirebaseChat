@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.model.User;
+import com.example.kyung.firebasechat.util.ChangeUtil;
 import com.example.kyung.firebasechat.util.DialogUtil;
 import com.example.kyung.firebasechat.util.ValidationUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,7 +51,7 @@ public class SignupNextActivity extends AppCompatActivity {
         // 파이어베이스 모듈 사용 및 데이터베이스 레퍼런스 생성
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        userRef = database.getReference("user");
+        userRef = database.getReference(Const.table_user);
 
         setContentView(R.layout.activity_signup_next);
         initView();
@@ -161,9 +162,13 @@ public class SignupNextActivity extends AppCompatActivity {
                                                     DialogUtil.showDialog(SignupNextActivity.this,getString(R.string.alert_emailMsgFail),true);
                                                 }
                                             });
-                                    // 3. 사용자 등록 (firebase에서 불러올 때 "."을 못불러오므로 email시에는 reaplace 해주어야 한다.)
+                                    // 3. 사용자 등록 (firebase에서 불러올 때 "."을 못불러오므로 email을 key로 저장시에는 reaplace 해주어야 한다.)
+                                    String keyEmail = ChangeUtil.changeMailFormat(email);
                                     User user = new User(fUser.getUid(),name,email,"",phone_number);
-                                    userRef.child(phone_number).setValue(user); // key를 phoneNumber로 함
+                                    userRef.child(keyEmail).setValue(user);
+                                    // phone과 mail을 연동시킴(나중에 친구찾기할 때 사용)
+                                    database.getReference(phone_number).setValue(keyEmail);
+                                    setResult(RESULT_OK);
                                 }
                             }
                         })

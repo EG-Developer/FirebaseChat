@@ -21,8 +21,14 @@ import android.widget.Spinner;
 
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
+import com.example.kyung.firebasechat.util.DialogUtil;
 import com.example.kyung.firebasechat.util.ValidationUtil;
 import com.google.android.gms.common.SignInButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -39,15 +45,18 @@ public class SignupActivity extends AppCompatActivity {
     private InputMethodManager imm;
     private ConstraintLayout constraint;
 
+//    FirebaseDatabase database;
+//    DatabaseReference userRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(imm.isAcceptingText()){
 
-        }
+//        database = FirebaseDatabase.getInstance();
+//        userRef = database.getReference(Const.table_user);
 
         initView();
         initSpinner();
@@ -89,10 +98,30 @@ public class SignupActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = editSignPhone.getText().toString().replace("-", "");
+                final String phone = editSignPhone.getText().toString().replace("-", "");
                 Intent intent = new Intent(SignupActivity.this, SignupNextActivity.class);
                 intent.putExtra(Const.key_phone, phone);
-                startActivity(intent);
+                startActivityForResult(intent,Const.req_signup_first);
+
+                // 중복체크는 나중에 다시 해볼 것.( 전화인증으로 해본 뒤 일단 그냥 진행)
+//                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Log.e("ㅇㅇㅇㅇ","dddddddddd");
+//                        if(dataSnapshot.child(phone).exists()){
+//                            DialogUtil.showDialog(SignupActivity.this,getString(R.string.alert_overlapPhone),false);
+//                        } else{
+//                            Intent intent = new Intent(SignupActivity.this, SignupNextActivity.class);
+//                            intent.putExtra(Const.key_phone, phone);
+//                            startActivityForResult(intent,Const.req_signup_first);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        Log.e("ㅇㅇㅇㅇ",databaseError.getMessage());
+//                    }
+//                });
             }
         });
     }
@@ -117,7 +146,6 @@ public class SignupActivity extends AppCompatActivity {
     private boolean deletingBackward;
 
     private void setEditSignPhone() {
-
 
         // 반응형으로 만들기
         editSignPhone.addTextChangedListener(new TextWatcher() {
@@ -199,5 +227,17 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case Const.req_signup_first:
+                if(requestCode == RESULT_OK){
+                    finish();
+                }
+                break;
+        }
     }
 }

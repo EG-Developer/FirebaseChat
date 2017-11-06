@@ -15,9 +15,6 @@ public class ValidationUtil {
     // validation   : 요구사항에 맞도록 정상적으로 동작하는지 확인
     //                값을 검사할 때는 validation 이 맞을거 같음....
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference userRef = database.getReference("user");
-
     /**
      * 패스워드 검증하기
      * @param password

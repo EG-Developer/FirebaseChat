@@ -11,6 +11,8 @@ import android.widget.Button;
 import com.example.kyung.firebasechat.customview.StartTab;
 import com.example.kyung.firebasechat.sign.SigninActivity;
 import com.example.kyung.firebasechat.sign.SignupActivity;
+import com.example.kyung.firebasechat.sign.SignupNextActivity;
+import com.example.kyung.firebasechat.util.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +26,19 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
-        initView();
-        initTabLayout();
-        initViewPager();
-        initTabwithPager();
-        initButtonListener();
+        // 로그인되어 있는지 체크
+        if(PreferenceUtil.getString(this,Const.key_auto_sign).equals("true")){
+            Intent intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            setContentView(R.layout.activity_first);
+            initView();
+            initTabLayout();
+            initViewPager();
+            initTabwithPager();
+            initButtonListener();
+        }
     }
 
     private void initView(){
