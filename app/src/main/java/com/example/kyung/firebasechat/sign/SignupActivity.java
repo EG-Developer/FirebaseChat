@@ -234,7 +234,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case Const.req_signup_first:
-                if(requestCode == RESULT_OK){
+                if(resultCode == RESULT_OK){
                     finish();
                 }
                 break;

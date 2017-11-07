@@ -33,4 +33,7 @@
     <string name="menu_addRoom">Add Room</string>
     <string name="menu_editMsg">Edit Message</string>
     <string name="menu_editArg">Rearrange Room</string>
+
+    <!-- chat -->
+    <string name="chat_startMsg">start Chatting</string>
 </resources>

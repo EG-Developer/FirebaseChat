@@ -91,7 +91,7 @@ public class SigninActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             FirebaseUser fUser = mAuth.getCurrentUser();
-//                            if(fUser.isEmailVerified()) {
+                            if(fUser.isEmailVerified()) {
                                 // preference에 값을 저장
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_id, fUser.getUid());
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_email, email);
@@ -103,13 +103,12 @@ public class SigninActivity extends AppCompatActivity {
 
                                 // 로그인 진행
                                 Intent intent = new Intent(SigninActivity.this, MainActivity.class);
-                                check=1;
                                 startActivity(intent);
                                 finish();
-//                            }
-//                            else {
-//                                DialogUtil.showDialog(SigninActivity.this,getString(R.string.alert_checkEmail),false);
-//                            }
+                            }
+                            else {
+                                DialogUtil.showDialog(SigninActivity.this,getString(R.string.alert_checkEmail),false);
+                            }
                         }
                     }
                 })
@@ -124,20 +123,19 @@ public class SigninActivity extends AppCompatActivity {
 
     /**
      * 엑티비티를 취소?로 종료시 애니메이션 처리로 activity를 불러옴
-     * check =1 이면 그냥 finish,
+     * auto_sign =true 이면 그냥 finish,
      * check =2 이면 처음 화면 불러옴
      */
-    int check=2;
     @Override
     protected void onPause() {
         super.onPause();
-//        if(check ==1){
-//            finish();
-//        } else {
-//            Intent intent = new Intent(this, FirstActivity.class);
-//            startActivity(intent);
-//            overridePendingTransition(R.anim.anim_scale_in_center, R.anim.anim_scale_out_center);
-//            finish();
-//        }
+        if(PreferenceUtil.getString(this,Const.key_auto_sign).equals("true")){
+            finish();
+        } else {
+            Intent intent = new Intent(this, FirstActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.anim_scale_in_center, R.anim.anim_scale_out_center);
+            finish();
+        }
     }
 }

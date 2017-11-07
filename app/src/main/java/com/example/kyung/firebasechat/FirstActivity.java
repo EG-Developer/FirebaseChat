@@ -1,6 +1,8 @@
 package com.example.kyung.firebasechat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,20 +14,36 @@ import com.example.kyung.firebasechat.customview.StartTab;
 import com.example.kyung.firebasechat.sign.SigninActivity;
 import com.example.kyung.firebasechat.sign.SignupActivity;
 import com.example.kyung.firebasechat.sign.SignupNextActivity;
+import com.example.kyung.firebasechat.util.PermissionUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstActivity extends AppCompatActivity implements View.OnClickListener {
+public class FirstActivity extends AppCompatActivity implements View.OnClickListener, PermissionUtil.CallbackPermission {
 
     ViewPager viewPagerStart;
     TabLayout tabLayoutStart;
     Button btnSignIn, btnSignUp;
 
+    PermissionUtil permissionUtil;
+
+    private static String[] permissions = {
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_CONTACTS
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 퍼미션 체크
+        permissionUtil = new PermissionUtil(this,permissions);
+        permissionUtil.checkVersion(this);
+    }
+
+    // 퍼미션 체크 후에 실행
+    private void init(){
         // 로그인되어 있는지 체크
         if(PreferenceUtil.getString(this,Const.key_auto_sign).equals("true")){
             Intent intent = new Intent(this, SigninActivity.class);
@@ -105,5 +123,16 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        permissionUtil.onResult(this,Const.per_code,grantResults);
+    }
+
+    @Override
+    public void callInit() {
+        init();
     }
 }

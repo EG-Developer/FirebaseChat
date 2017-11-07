@@ -167,7 +167,7 @@ public class SignupNextActivity extends AppCompatActivity {
                                     User user = new User(fUser.getUid(),name,email,"",phone_number);
                                     userRef.child(keyEmail).setValue(user);
                                     // phone과 mail을 연동시킴(나중에 친구찾기할 때 사용)
-                                    database.getReference(phone_number).setValue(keyEmail);
+                                    database.getReference(Const.table_member).child(phone_number).setValue(keyEmail);
                                     setResult(RESULT_OK);
                                 }
                             }

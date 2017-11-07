@@ -5,8 +5,9 @@ package com.example.kyung.firebasechat;
  */
 
 public class Const {
-    // startActivity의 requestCode
-    public static final int req_signup_first = 123;
+    // request Code
+    public static final int req_signup_first = 100; // startActivity의 requestCode
+    public static final int per_code = 101; // permission code
 
     // 불러올 Key 값 정의
     public static final String key_id = "id";
@@ -19,4 +20,6 @@ public class Const {
 
     // database의 table 명 정의
     public static final String table_user = "user";
+    public static final String table_member = "member";
+    public static final String table_room = "room";
 }

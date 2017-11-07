@@ -1,5 +1,7 @@
 package com.example.kyung.firebasechat.model;
 
+import java.util.List;
+
 /**
  * Created by pc on 11/3/2017.
  */
@@ -10,6 +12,9 @@ public class User {
     public String email;
     public String token;
     public String phone_number;
+
+    public List<User> my_firend;
+    public List<Room> chatting_room;
 
     public User(){
         // default for firebase
