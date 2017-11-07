@@ -3,17 +3,34 @@ package com.example.kyung.firebasechat.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.main.chat.menu.makeroom.MakeRoomActivity;
+import com.example.kyung.firebasechat.model.User;
+import com.example.kyung.firebasechat.util.ChangeUtil;
+import com.example.kyung.firebasechat.util.ContactUtil;
+import com.example.kyung.firebasechat.util.PreferenceUtil;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,14 +39,25 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPagerMain;
     int toolbarNumber = 0;
 
+    FirebaseDatabase database;
+    DatabaseReference userRef;
+    DatabaseReference memberRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        database = FirebaseDatabase.getInstance();
+        userRef = database.getReference(Const.table_user);
+        memberRef = database.getReference(Const.table_member);
+
         initView();
         initViewPager();
         initTablayout();
         setViewWithTab();
+
+        setFriendList();
     }
 
     private void initView() {
@@ -119,5 +147,59 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_rearrangeRoom: break;
         }
         return true;
+    }
+
+    /**
+     * 저장된 전화번호부에 있는 친구목록을 불러와 firebase에 업데이트
+     */
+    public void setFriendList(){
+        final List<String> phoneList = ContactUtil.phoneNumLoad(this);
+        final String myKey = ChangeUtil.changeMailFormat(PreferenceUtil.getString(this,Const.key_email));
+        memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // phone을 통해 mail의 key를 가져옴
+                final List<String> mailKey = new ArrayList<>();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    for(String phoneNum : phoneList){
+                        if(phoneNum.equals(snapshot.getKey())){
+                            String mail = (String) snapshot.getValue();
+                            mailKey.add(ChangeUtil.changeMailFormat(mail));
+                            break;
+                        }
+                    }
+                }
+
+                // 받은 friend_key들을 통해 내 친구로 등록
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(String mail : mailKey){
+                            User friend = new User();
+                            Map map = (HashMap) dataSnapshot.child(mail).getValue();
+                            friend.id = (String) map.get(Const.key_id);
+                            friend.email = (String) map.get(Const.key_email);
+                            friend.token = (String) map.get(Const.key_token);
+                            friend.phone_number = (String) map.get(Const.key_phone);
+                            friend.name = (String) map.get(Const.key_name);
+                            friend.profile_url = (String) map.get(Const.key_profile_url);
+                            userRef.child(myKey).child(Const.table_user_friend).child(mail).setValue(friend);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

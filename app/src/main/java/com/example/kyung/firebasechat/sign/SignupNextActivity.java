@@ -136,6 +136,7 @@ public class SignupNextActivity extends AppCompatActivity {
                 final String password = editPassword.getText().toString();
                 final String name = editName.getText().toString();
                 final String phone_number = getIntent().getStringExtra(Const.key_phone);
+                final String profile_url = "";
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -164,7 +165,7 @@ public class SignupNextActivity extends AppCompatActivity {
                                             });
                                     // 3. 사용자 등록 (firebase에서 불러올 때 "."을 못불러오므로 email을 key로 저장시에는 reaplace 해주어야 한다.)
                                     String keyEmail = ChangeUtil.changeMailFormat(email);
-                                    User user = new User(fUser.getUid(),name,email,"",phone_number);
+                                    User user = new User(fUser.getUid(),name,email,"",phone_number,profile_url);
                                     userRef.child(keyEmail).setValue(user);
                                     // phone과 mail을 연동시킴(나중에 친구찾기할 때 사용)
                                     database.getReference(Const.table_member).child(phone_number).setValue(keyEmail);

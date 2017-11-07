@@ -18,5 +18,4 @@ public class Room {
     public long creation_time;
     public List<User> member;
 
-
 }

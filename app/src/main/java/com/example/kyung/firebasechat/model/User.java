@@ -12,20 +12,22 @@ public class User {
     public String email;
     public String token;
     public String phone_number;
+    public String profile_url;
 
-    public List<User> my_firend;
+    public List<User> my_friend;
     public List<Room> chatting_room;
 
     public User(){
         // default for firebase
     }
 
-    public User(String id, String name, String email, String token, String phone_number){
+    public User(String id, String name, String email, String token, String phone_number, String profile_url){
         this.id = id;
         this.name = name;
         this.email = email;
         this.token = token;
         this.phone_number = phone_number;
+        this.profile_url = profile_url;
     }
 
 }

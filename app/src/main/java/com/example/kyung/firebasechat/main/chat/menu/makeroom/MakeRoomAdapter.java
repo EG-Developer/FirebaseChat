@@ -2,6 +2,7 @@ package com.example.kyung.firebasechat.main.chat.menu.makeroom;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,9 @@ import android.widget.TextView;
 
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.model.User;
-import com.example.kyung.firebasechat.util.ChangeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Kyung on 2017-11-07.
@@ -32,6 +31,10 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
         notifyDataSetChanged();
     }
 
+    public List<User> loadFriend(){
+        return friends_invite;
+    }
+
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_make_room,parent,false);
@@ -42,10 +45,12 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
     public void onBindViewHolder(Holder holder, int position) {
         User friend = friends.get(position);
         holder.setFriendName(friend.name);
+
         if(holder.isCheckInvite())
             friends_invite.add(friend);
         else
             friends_invite.remove(friend);
+        Log.e("size","==================="+friends_invite.size());
     }
 
     @Override
@@ -87,6 +92,7 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
                     } else{
                         inviteCheck = false;
                     }
+                    // 체크되면 그 값을 friendlist에 추가시키기 위해 데이터를 변경
                     notifyItemChanged(position);
                 }
             });

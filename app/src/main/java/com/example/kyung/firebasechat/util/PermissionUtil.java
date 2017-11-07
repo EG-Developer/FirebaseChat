@@ -32,7 +32,7 @@ public class PermissionUtil {
     private void customCheckPermission(Activity activity){
         List<String> requires = new ArrayList<>();
         for(String permission : permissions){
-            if(activity.checkSelfPermission(permission) != PackageManager.PERMISSION_DENIED){
+            if(activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED){
                 requires.add(permission);
             }
         }

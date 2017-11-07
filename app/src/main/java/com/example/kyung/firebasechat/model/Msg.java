@@ -10,6 +10,8 @@ public class Msg {
     public String user_id;
     public String name;
     public String time;
+    public String type;
+    
     public long received_count;
     public long read_count;
 
