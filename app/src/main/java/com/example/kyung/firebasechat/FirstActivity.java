@@ -98,7 +98,6 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
                 intent = new Intent(this, SigninActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_scale_in_center, R.anim.anim_scale_out_center);
-                finish();
                 break;
             default:
                 intent = new Intent(this, SignupActivity.class);

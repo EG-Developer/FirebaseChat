@@ -105,6 +105,7 @@ public class SigninActivity extends AppCompatActivity {
                                 Intent intent = new Intent(SigninActivity.this, MainActivity.class);
                                 check=1;
                                 startActivity(intent);
+                                finish();
 //                            }
 //                            else {
 //                                DialogUtil.showDialog(SigninActivity.this,getString(R.string.alert_checkEmail),false);
@@ -130,13 +131,13 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(check ==1){
-            finish();
-        } else {
-            Intent intent = new Intent(this, FirstActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.anim_scale_in_center, R.anim.anim_scale_out_center);
-            finish();
-        }
+//        if(check ==1){
+//            finish();
+//        } else {
+//            Intent intent = new Intent(this, FirstActivity.class);
+//            startActivity(intent);
+//            overridePendingTransition(R.anim.anim_scale_in_center, R.anim.anim_scale_out_center);
+//            finish();
+//        }
     }
 }
