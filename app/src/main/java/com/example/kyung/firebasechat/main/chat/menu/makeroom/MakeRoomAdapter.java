@@ -1,5 +1,6 @@
 package com.example.kyung.firebasechat.main.chat.menu.makeroom;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,15 +26,17 @@ import java.util.List;
 public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder> {
 
     List<User> friends = new ArrayList<>();
-    List<User> friends_invite = new ArrayList<>();
+    Iinvite iinvite;
+
+    public MakeRoomAdapter(Context context){
+        if(context instanceof Iinvite){
+            iinvite = (Iinvite)context;
+        }
+    }
 
     public void setDataAndRefresh(List<User> friends){
         this.friends = friends;
         notifyDataSetChanged();
-    }
-
-    public List<User> loadFriend(){
-        return friends_invite;
     }
 
     @Override
@@ -44,13 +48,9 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         User friend = friends.get(position);
+        holder.setPosition(position);
         holder.setFriendName(friend.name);
-
-        if(holder.isCheckInvite())
-            friends_invite.add(friend);
-        else
-            friends_invite.remove(friend);
-        Log.e("size","==================="+friends_invite.size());
+        holder.setFriend(friend);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
         ImageView friendProfile;
         TextView friendName;
         CheckBox friendInvite;
+        User friend;
         int position;
         boolean inviteCheck = false;
         public Holder(View itemView) {
@@ -73,6 +74,9 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
             friendProfile = view.findViewById(R.id.friendProfile);
             friendName = view.findViewById(R.id.friendName);
             friendInvite = view.findViewById(R.id.friendInvite);
+        }
+        private void setFriend(User friend){
+            this.friend = friend;
         }
         private void setPosition(int position){
             this.position = position;
@@ -87,18 +91,17 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
             friendInvite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    // 체크되면 그 값을 friendlist에 추가시키기 위해 데이터를 변경 (인터페이스 상속)
                     if(isChecked){
-                        inviteCheck = true;
+                        iinvite.isCheckInviteFriend(true,friend);
                     } else{
-                        inviteCheck = false;
+                        iinvite.isCheckInviteFriend(false,friend);
                     }
-                    // 체크되면 그 값을 friendlist에 추가시키기 위해 데이터를 변경
-                    notifyItemChanged(position);
                 }
             });
         }
-        private boolean isCheckInvite(){
-            return inviteCheck;
-        }
+    }
+    public interface Iinvite{
+        public void isCheckInviteFriend(boolean check, User friend);
     }
 }

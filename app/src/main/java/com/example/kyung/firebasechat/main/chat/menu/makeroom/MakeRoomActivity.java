@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MakeRoomActivity extends AppCompatActivity {
+public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapter.Iinvite{
 
     private Toolbar toolbar;
     private EditText searchFriend;
@@ -43,7 +43,10 @@ public class MakeRoomActivity extends AppCompatActivity {
     private User me;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private DatabaseReference userRef;
     private DatabaseReference roomRef;
+
+    private List<User> friendList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,10 @@ public class MakeRoomActivity extends AppCompatActivity {
         // 로그인된 uer에 대한 정보를 가져옴
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference(Const.table_user).child(ChangeUtil.changeMailFormat(email));
+        userRef = database.getReference(Const.table_user);
         roomRef = database.getReference(Const.table_room);
         me = new User();
+        friendList.clear();
 
         initView();
         initRecyclerView();
@@ -72,7 +77,7 @@ public class MakeRoomActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(){
-        adapter = new MakeRoomAdapter();
+        adapter = new MakeRoomAdapter(this);
         recyclerMakeRoom.setAdapter(adapter);
         recyclerMakeRoom.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -113,15 +118,14 @@ public class MakeRoomActivity extends AppCompatActivity {
      * @param view
      */
     public void makeRoom(View view){
-        List<User> room_member = adapter.loadFriend();
-        room_member.add(me);
+        friendList.add(me);
         // 1명 이상 초대시 방 생성
-        if(room_member.size()>1){
+        if(friendList.size()>1){
             // DB에 room 추가
             String roomId = roomRef.push().getKey();
             // title 만들기
             String title = "";
-            for(User user : room_member){
+            for(User user : friendList){
                 title += "," + user.name;
                 if(title.length()>12){
                     title = title.substring(0,12)+"...";
@@ -135,10 +139,16 @@ public class MakeRoomActivity extends AppCompatActivity {
             room.title = title;
             // firebase database에 저장
             roomRef.child(roomId).setValue(room);
-            for(User member : room_member){
+            for(User member : friendList){
                 String emailKey = ChangeUtil.changeMailFormat(member.email);
                 roomRef.child(roomId).child(Const.table_member).child(emailKey).setValue(member);
+                userRef.child(emailKey).child(Const.table_room).child(room.id).setValue(room);
             }
+            /*
+                룸 이동 전 각각의 멤버에도 Room 추가 필요함
+             */
+
+
             // 만든 룸으로 이동
             Intent intent = new Intent(this, ChatDetailActivity.class);
             intent.putExtra(Const.key_room_id,roomId);
@@ -146,6 +156,17 @@ public class MakeRoomActivity extends AppCompatActivity {
             finish();
         } else{
             DialogUtil.showDialog(this,"1명 이상의 친구를 초대해 주세요",false);
+            friendList.clear();
         }
+    }
+
+    @Override
+    public void isCheckInviteFriend(boolean check, User friend) {
+        if(check){
+            friendList.add(friend);
+        } else{
+            friendList.remove(friend);
+        }
+        Log.e("friend 추가","========================="+friend.name+" // "+check + " // "+ friendList.size());
     }
 }
