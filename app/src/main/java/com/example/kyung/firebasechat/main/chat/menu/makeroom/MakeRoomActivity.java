@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +51,10 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
     private DatabaseReference userRef;
     private DatabaseReference roomRef;
 
-    private List<User> friendList = new ArrayList<>();
+    private List<User> inviteFriendList = new ArrayList<>();
+    List<User> my_friend = new ArrayList<>();
+    List<User> show_friendList = new ArrayList<>();
+    List<String> friendsName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,7 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
         userRef = database.getReference(Const.table_user);
         roomRef = database.getReference(Const.table_room);
         me = new User();
-        friendList.clear();
+        inviteFriendList.clear();
 
         initView();
         initRecyclerView();
@@ -78,6 +84,41 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
         setSupportActionBar(toolbar);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        setTitle("친구선택");
+        return true;
+    }
+
+    private void setSearchFriendListener(){
+        searchFriend.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                show_friendList.clear();
+                if("".equals(s.toString()) || s.toString() == null){
+                    adapter.setDataAndRefresh(my_friend);
+                } else {
+                    for (User user : my_friend) {
+                        if (user.name.contains(s)) {
+                            show_friendList.add(user);
+                        }
+                    }
+                    adapter.setDataAndRefresh(show_friendList);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     private void initRecyclerView(){
         adapter = new MakeRoomAdapter(this);
         recyclerMakeRoom.setAdapter(adapter);
@@ -89,7 +130,7 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // 자신의 데이터를 세팅
-                List<User> my_friend = new ArrayList<>();
+                my_friend.clear();
                 Map map = (HashMap) dataSnapshot.getValue();
                 me.id = (String) map.get(Const.key_id);
                 me.email = (String) map.get(Const.key_email);
@@ -106,6 +147,7 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
                     }
                 }
                 adapter.setDataAndRefresh(my_friend);
+                setSearchFriendListener();
             }
 
             @Override
@@ -120,14 +162,14 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
      * @param view
      */
     public void makeRoom(View view){
-        friendList.add(me);
+        inviteFriendList.add(me);
         // 1명 이상 초대시 방 생성
-        if(friendList.size()>1){
+        if(inviteFriendList.size()>1){
             // DB에 room 추가
             String roomId = roomRef.push().getKey();
             // title 만들기
             String title = "";
-            for(User user : friendList){
+            for(User user : inviteFriendList){
                 title += "," + user.name;
                 if(title.length()>12){
                     title = title.substring(0,12)+"...";
@@ -141,7 +183,7 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
             room.title = title;
             // firebase database에 저장
             roomRef.child(roomId).setValue(room);
-            for(User member : friendList){
+            for(User member : inviteFriendList){
                 String emailKey = ChangeUtil.changeMailFormat(member.email);
                 roomRef.child(roomId).child(Const.table_member).child(emailKey).setValue(member);
                 userRef.child(emailKey).child(Const.table_room).child(room.id).setValue(room);
@@ -158,17 +200,17 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
             finish();
         } else{
             DialogUtil.showDialog(this,"1명 이상의 친구를 초대해 주세요",false);
-            friendList.clear();
+            inviteFriendList.clear();
         }
     }
 
     @Override
     public void isCheckInviteFriend(boolean check, User friend) {
         if(check){
-            friendList.add(friend);
+            inviteFriendList.add(friend);
         } else{
-            friendList.remove(friend);
+            inviteFriendList.remove(friend);
         }
-        Log.e("friend 추가","========================="+friend.name+" // "+check + " // "+ friendList.size());
+        Log.e("friend 추가","========================="+friend.name+" // "+check + " // "+ inviteFriendList.size());
     }
 }
