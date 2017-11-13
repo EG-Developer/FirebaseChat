@@ -13,6 +13,8 @@ import android.widget.EditText;
 
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
+import com.example.kyung.firebasechat.main.chat.ListChatAdapter;
+import com.example.kyung.firebasechat.main.chat.ListChatView;
 import com.example.kyung.firebasechat.main.chat.chatdetail.ChatDetailActivity;
 import com.example.kyung.firebasechat.model.Room;
 import com.example.kyung.firebasechat.model.User;

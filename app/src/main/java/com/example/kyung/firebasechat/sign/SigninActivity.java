@@ -124,7 +124,7 @@ public class SigninActivity extends AppCompatActivity {
     /**
      * 엑티비티를 취소?로 종료시 애니메이션 처리로 activity를 불러옴
      * auto_sign =true 이면 그냥 finish,
-     * check =2 이면 처음 화면 불러옴
+     * 아니면 처음 화면 불러옴
      */
     @Override
     protected void onPause() {

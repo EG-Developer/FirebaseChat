@@ -24,13 +24,9 @@ public class MainPagerAdapter extends PagerAdapter {
 
     List<View> viewList = new ArrayList<>();
 
-    public MainPagerAdapter(Context context){
+    public MainPagerAdapter(Context context, List<View> viewList){
         this.context = context;
-        View view = new ListFriendView(context); viewList.add(view);
-        view = new ListChatView(context); viewList.add(view);
-        view = new BoardView(context); viewList.add(view);
-        view = new CallView(context); viewList.add(view);
-        view = new MyInfoView(context); viewList.add(view);
+        this.viewList = viewList;
     }
 
     @Override

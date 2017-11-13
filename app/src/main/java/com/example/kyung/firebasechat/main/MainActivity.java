@@ -13,10 +13,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
+import com.example.kyung.firebasechat.main.board.BoardView;
+import com.example.kyung.firebasechat.main.call.CallView;
+import com.example.kyung.firebasechat.main.chat.ListChatView;
 import com.example.kyung.firebasechat.main.chat.menu.makeroom.MakeRoomActivity;
+import com.example.kyung.firebasechat.main.friend.ListFriendView;
+import com.example.kyung.firebasechat.main.myinfo.MyInfoView;
 import com.example.kyung.firebasechat.model.User;
 import com.example.kyung.firebasechat.util.ChangeUtil;
 import com.example.kyung.firebasechat.util.ContactUtil;
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference userRef;
     DatabaseReference memberRef;
+
+    View viewFriend, viewChat, viewBoard, viewCall, viewInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +77,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewPager(){
-        MainPagerAdapter adapter = new MainPagerAdapter(this);
+        List<View> viewList = new ArrayList<>();
+        viewFriend = new ListFriendView(this); viewList.add(viewFriend);
+        viewChat = new ListChatView(this); viewList.add(viewChat);
+        viewBoard = new BoardView(this); viewList.add(viewBoard);
+        viewCall = new CallView(this); viewList.add(viewCall);
+        viewInfo = new MyInfoView(this); viewList.add(viewInfo);
+        MainPagerAdapter adapter = new MainPagerAdapter(this, viewList);
         viewPagerMain.setAdapter(adapter);
     }
 
@@ -201,5 +215,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // Activity의 상태에 따른 리스너들 설정
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((ListChatView)viewChat).setListRoom();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((ListChatView)viewChat).endListRoomUpdate();
     }
 }

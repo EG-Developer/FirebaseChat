@@ -64,7 +64,6 @@ public class MakeRoomAdapter extends RecyclerView.Adapter<MakeRoomAdapter.Holder
         CheckBox friendInvite;
         User friend;
         int position;
-        boolean inviteCheck = false;
         public Holder(View itemView) {
             super(itemView);
             initVew(itemView);
