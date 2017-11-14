@@ -17,12 +17,15 @@ public class Const {
     public static final String key_phone = "phone_number";
     public static final String key_name = "name";
     public static final String key_profile_url = "profile_url";
-    public static final String key_room_id = "room_id";
     public static final String key_auto_sign = "AUTO_SIGN";
+
+    public static final String key_room_id = "room_id";
+    public static final String key_room_title = "title";
 
     // database의 table 명 정의
     public static final String table_user = "user";
     public static final String table_user_friend = "my_friend";
     public static final String table_member = "member";
     public static final String table_room = "room";
+    public static final String table_msg = "msg";
 }

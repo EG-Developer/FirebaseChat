@@ -1,9 +1,7 @@
 package com.example.kyung.firebasechat.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -11,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -24,7 +21,7 @@ import com.example.kyung.firebasechat.main.chat.menu.makeroom.MakeRoomActivity;
 import com.example.kyung.firebasechat.main.friend.ListFriendView;
 import com.example.kyung.firebasechat.main.myinfo.MyInfoView;
 import com.example.kyung.firebasechat.model.User;
-import com.example.kyung.firebasechat.util.ChangeUtil;
+import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.ContactUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
 import com.google.firebase.database.DataSnapshot;
@@ -168,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setFriendList(){
         final List<String> phoneList = ContactUtil.phoneNumLoad(this);
-        final String myKey = ChangeUtil.changeMailFormat(PreferenceUtil.getString(this,Const.key_email));
+        final String myKey = FormatUtil.changeMailFormat(PreferenceUtil.getString(this,Const.key_email));
         memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -178,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     for(String phoneNum : phoneList){
                         if(phoneNum.equals(snapshot.getKey())){
                             String mail = (String) snapshot.getValue();
-                            mailKey.add(ChangeUtil.changeMailFormat(mail));
+                            mailKey.add(FormatUtil.changeMailFormat(mail));
                             break;
                         }
                     }

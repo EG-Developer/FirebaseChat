@@ -16,16 +16,12 @@ import android.widget.EditText;
 
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
-import com.example.kyung.firebasechat.main.chat.ListChatAdapter;
-import com.example.kyung.firebasechat.main.chat.ListChatView;
 import com.example.kyung.firebasechat.main.chat.chatdetail.ChatDetailActivity;
 import com.example.kyung.firebasechat.model.Room;
 import com.example.kyung.firebasechat.model.User;
-import com.example.kyung.firebasechat.util.ChangeUtil;
+import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.DialogUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
-import com.google.firebase.FirebaseApiNotAvailableException;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +42,7 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
     private MakeRoomAdapter adapter;
 
     private User me;
+    private Room room;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private DatabaseReference userRef;
@@ -54,7 +51,7 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
     private List<User> inviteFriendList = new ArrayList<>();
     List<User> my_friend = new ArrayList<>();
     List<User> show_friendList = new ArrayList<>();
-    List<String> friendsName = new ArrayList<>();
+    List<User> invited_friend = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +62,44 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
 
         // 로그인된 uer에 대한 정보를 가져옴
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(Const.table_user).child(ChangeUtil.changeMailFormat(email));
+        myRef = database.getReference(Const.table_user).child(FormatUtil.changeMailFormat(email));
         userRef = database.getReference(Const.table_user);
         roomRef = database.getReference(Const.table_room);
         me = new User();
+
         inviteFriendList.clear();
+        invited_friend.clear();
+
+        // room을 Serialize로 받아온다.
+        room = (Room) getIntent().getSerializableExtra(Const.table_room);
+        if(room == null){
+            room = new Room();
+            room.id = roomRef.push().getKey();
+        } else{
+        }
+        loadInvitedFriend();
+        Log.e("찍힘",room.id);
 
         initView();
         initRecyclerView();
-        loadFriendList();
+    }
+
+    private void loadInvitedFriend(){
+        roomRef.child(room.id).child(Const.table_member).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    User user = snapshot.getValue(User.class);
+                    invited_friend.add(user);
+                }
+                loadFriendList();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -144,6 +170,12 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
                     for(DataSnapshot snapshot : friendMember.getChildren()){
                         User user = snapshot.getValue(User.class);
                         my_friend.add(user);
+                        for(User invitedFriend : invited_friend){
+                            if(user.id.equals(invitedFriend.id)){
+                                my_friend.remove(user);
+                                break;
+                            }
+                        }
                     }
                 }
                 adapter.setDataAndRefresh(my_friend);
@@ -165,37 +197,29 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
         inviteFriendList.add(me);
         // 1명 이상 초대시 방 생성
         if(inviteFriendList.size()>1){
-            // DB에 room 추가
-            String roomId = roomRef.push().getKey();
-            // title 만들기
-            String title = "";
-            for(User user : inviteFriendList){
-                title += "," + user.name;
-                if(title.length()>12){
-                    title = title.substring(0,12)+"...";
-                    break;
+            // room_title이 존재하지 않을 경우 title 만들기
+            if(room.title == null) {
+                room.title = "";
+                for (User user : inviteFriendList) {
+                    room.title += "," + user.name;
+                    if (room.title.length() > 15) {
+                        room.title = room.title.substring(0, 15) + "...";
+                        break;
+                    }
                 }
+                room.title = room.title.substring(1);
+                roomRef.child(room.id).setValue(room);
             }
-            title = title.substring(1);
-            // 변수에 저장
-            Room room = new Room();
-            room.id = roomId;
-            room.title = title;
-            // firebase database에 저장
-            roomRef.child(roomId).setValue(room);
+            // 초대된 member를 room에 저장
             for(User member : inviteFriendList){
-                String emailKey = ChangeUtil.changeMailFormat(member.email);
-                roomRef.child(roomId).child(Const.table_member).child(emailKey).setValue(member);
+                String emailKey = FormatUtil.changeMailFormat(member.email);
+                roomRef.child(room.id).child(Const.table_member).child(emailKey).setValue(member);
                 userRef.child(emailKey).child(Const.table_room).child(room.id).setValue(room);
             }
-            /*
-                룸 이동 전 각각의 멤버에도 Room 추가 필요함
-             */
-
 
             // 만든 룸으로 이동
             Intent intent = new Intent(this, ChatDetailActivity.class);
-            intent.putExtra(Const.key_room_id,roomId);
+            intent.putExtra(Const.key_room_id,room.id);
             startActivity(intent);
             finish();
         } else{
@@ -211,6 +235,5 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
         } else{
             inviteFriendList.remove(friend);
         }
-        Log.e("friend 추가","========================="+friend.name+" // "+check + " // "+ inviteFriendList.size());
     }
 }

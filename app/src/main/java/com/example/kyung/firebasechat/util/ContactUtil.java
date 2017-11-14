@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class ContactUtil {
         if(cursor != null) {
             while (cursor.moveToNext()) {
                 int index = cursor.getColumnIndex(projection[0]);
-                data.add(cursor.getString(index));
+                data.add(FormatUtil.changePhoneFormat(cursor.getString(index)));
             }
         }
         return data;

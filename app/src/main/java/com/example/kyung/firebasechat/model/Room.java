@@ -2,6 +2,7 @@ package com.example.kyung.firebasechat.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 
 @IgnoreExtraProperties
-public class Room {
+public class Room implements Serializable {
     public String id;
     public String title;
     public String last_msg;

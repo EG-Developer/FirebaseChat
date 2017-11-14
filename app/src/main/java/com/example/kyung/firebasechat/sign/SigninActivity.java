@@ -13,7 +13,7 @@ import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.FirstActivity;
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.main.MainActivity;
-import com.example.kyung.firebasechat.util.ChangeUtil;
+import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.DialogUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -99,7 +99,7 @@ public class SigninActivity extends AppCompatActivity {
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_auto_sign,"true");
 
                                 String refreshToken = FirebaseInstanceId.getInstance().getToken();
-                                userRef.child(ChangeUtil.changeMailFormat(email)).child(Const.key_token).setValue(refreshToken);
+                                userRef.child(FormatUtil.changeMailFormat(email)).child(Const.key_token).setValue(refreshToken);
 
                                 // 로그인 진행
                                 Intent intent = new Intent(SigninActivity.this, MainActivity.class);

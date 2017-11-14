@@ -1,13 +1,11 @@
 package com.example.kyung.firebasechat.sign;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +13,7 @@ import android.widget.EditText;
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.model.User;
-import com.example.kyung.firebasechat.util.ChangeUtil;
+import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.DialogUtil;
 import com.example.kyung.firebasechat.util.ValidationUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -164,7 +162,7 @@ public class SignupNextActivity extends AppCompatActivity {
                                                 }
                                             });
                                     // 3. 사용자 등록 (firebase에서 불러올 때 "."을 못불러오므로 email을 key로 저장시에는 reaplace 해주어야 한다.)
-                                    String keyEmail = ChangeUtil.changeMailFormat(email);
+                                    String keyEmail = FormatUtil.changeMailFormat(email);
                                     User user = new User(fUser.getUid(),name,email,"",phone_number,profile_url);
                                     userRef.child(keyEmail).setValue(user);
                                     // phone과 mail을 연동시킴(나중에 친구찾기할 때 사용)

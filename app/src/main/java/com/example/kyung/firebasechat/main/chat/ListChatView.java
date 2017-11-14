@@ -1,6 +1,5 @@
 package com.example.kyung.firebasechat.main.chat;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -14,7 +13,7 @@ import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.main.chat.chatdetail.ChatDetailActivity;
 import com.example.kyung.firebasechat.model.Room;
-import com.example.kyung.firebasechat.util.ChangeUtil;
+import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +44,7 @@ public class ListChatView extends FrameLayout implements ListChatAdapter.IMoveDe
 
     public void init(){
         database = FirebaseDatabase.getInstance();
-        String myKey = ChangeUtil.changeMailFormat(PreferenceUtil.getString(getContext(),Const.key_email));
+        String myKey = FormatUtil.changeMailFormat(PreferenceUtil.getString(getContext(),Const.key_email));
         myRoomRef = database.getReference(Const.table_user).child(myKey).child(Const.table_room);
         setListRoom();
     }
