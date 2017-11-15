@@ -28,4 +28,12 @@ public class Const {
     public static final String table_member = "member";
     public static final String table_room = "room";
     public static final String table_msg = "msg";
+
+    // adapter에 나에대한 int값, 다른사랑들에 대한 int값 정의
+    public static final int type_me = 200;
+    public static final int type_other = 201;
+
+    // Msg의 type 정의
+    public static final String type_image = "image";
+    public static final String type_msg = "text";
 }

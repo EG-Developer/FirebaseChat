@@ -7,11 +7,11 @@ package com.example.kyung.firebasechat.model;
 // key는 Room id 이다. (id는 room의 id)
 public class Msg {
     public String id;
-    public String idx;
-    public String msg;
-    public String user_id;
+    public long idx;
+    public String msgText;
+    public String user_email;
     public String name;
-    public String time;
+    public long time;
     public String type;
     
     public long received_count;
@@ -20,10 +20,11 @@ public class Msg {
     public Msg(){
 
     }
-    public Msg(String idx, String msg, String user_id, String name, String time, String type){
+    public Msg(String id, long idx, String msgText, String user_email, String name, long time, String type){
+        this.id = id;
         this.idx = idx;
-        this.msg = msg;
-        this.user_id = user_id;
+        this.msgText = msgText;
+        this.user_email = user_email;
         this.name = name;
         this.time = time;
         this.type = type;

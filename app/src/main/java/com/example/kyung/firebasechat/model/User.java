@@ -1,5 +1,7 @@
 package com.example.kyung.firebasechat.model;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.List;
 
 /**
@@ -14,7 +16,9 @@ public class User {
     public String phone_number;
     public String profile_url;
 
+    @Exclude
     public List<User> my_friend;
+    @Exclude
     public List<Room> chatting_room;
 
     public User(){

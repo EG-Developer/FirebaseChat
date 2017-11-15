@@ -1,5 +1,6 @@
 package com.example.kyung.firebasechat.model;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
@@ -17,6 +18,8 @@ public class Room implements Serializable {
     public long last_msg_time;
     public long msg_count;
     public long creation_time;
+
+    @Exclude
     public List<User> member;
 
 }

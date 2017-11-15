@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textMsgMe"
+            android:id="@+id/textMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="@dimen/chat_text_msg_max_width"
@@ -27,7 +27,7 @@
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/textTimeMe"
+        android:id="@+id/textTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -37,11 +37,11 @@
         app:layout_constraintEnd_toStartOf="@+id/cardView2" />
 
     <TextView
-        android:id="@+id/textCountMe"
+        android:id="@+id/textCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textSize="@dimen/chat_text_count_size"
-        app:layout_constraintBottom_toTopOf="@+id/textTimeMe"
+        app:layout_constraintBottom_toTopOf="@+id/textTime"
         app:layout_constraintEnd_toStartOf="@+id/cardView2" />
 </android.support.constraint.ConstraintLayout>
