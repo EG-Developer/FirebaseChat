@@ -80,6 +80,7 @@ public class ListChatView extends FrameLayout implements ListChatAdapter.IMoveDe
     public void initView(){
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_chat_list,null);
         recyclerView = view.findViewById(R.id.recyclerChatList);
+        recyclerView.addItemDecoration(new ListChatDivider(getContext()));
         adapter = new ListChatAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
