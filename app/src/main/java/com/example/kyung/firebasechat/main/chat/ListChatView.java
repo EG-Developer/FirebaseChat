@@ -65,8 +65,8 @@ public class ListChatView extends FrameLayout implements ListChatAdapter.IMoveDe
         public void onDataChange(DataSnapshot dataSnapshot) {
             roomList.clear();
             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                Room room = snapshot.getValue(Room.class);
-                roomList.add(room);
+                Room myRoom = snapshot.getValue(Room.class);
+                roomList.add(myRoom);
             }
             adapter.setDataAndRefresh(roomList);
         }
@@ -87,9 +87,10 @@ public class ListChatView extends FrameLayout implements ListChatAdapter.IMoveDe
     }
 
     @Override
-    public void goDetail(String roomId) {
+    public void goDetail(String roomId, String roomTitle) {
         Intent intent = new Intent(getContext(), ChatDetailActivity.class);
-        intent.putExtra(Const.key_room_id,roomId);
+        intent.putExtra(Const.KEY_ROOM_ID,roomId);
+        intent.putExtra(Const.KEY_ROOM_TITLE,roomTitle);
         getContext().startActivity(intent);
     }
 }

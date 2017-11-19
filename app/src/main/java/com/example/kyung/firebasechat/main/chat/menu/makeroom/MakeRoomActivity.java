@@ -75,10 +75,8 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
         if(room == null){
             room = new Room();
             room.id = roomRef.push().getKey();
-        } else{
         }
         loadInvitedFriend();
-        Log.e("찍힘",room.id);
 
         initView();
         initRecyclerView();
@@ -158,7 +156,7 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
                 // 자신의 데이터를 세팅
                 my_friend.clear();
                 Map map = (HashMap) dataSnapshot.getValue();
-                me.id = (String) map.get(Const.key_id);
+                me.id = (String) map.get(Const.KEY_ID);
                 me.email = (String) map.get(Const.key_email);
                 me.token = (String) map.get(Const.key_token);
                 me.phone_number = (String) map.get(Const.key_phone);
@@ -202,12 +200,9 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
                 room.title = "";
                 for (User user : inviteFriendList) {
                     room.title += "," + user.name;
-                    if (room.title.length() > 15) {
-                        room.title = room.title.substring(0, 15) + "...";
-                        break;
-                    }
                 }
                 room.title = room.title.substring(1);
+                room.creation_time = System.currentTimeMillis();
                 roomRef.child(room.id).setValue(room);
             }
             // 초대된 member를 room에 저장
@@ -219,7 +214,8 @@ public class MakeRoomActivity extends AppCompatActivity implements MakeRoomAdapt
 
             // 만든 룸으로 이동
             Intent intent = new Intent(this, ChatDetailActivity.class);
-            intent.putExtra(Const.key_room_id,room.id);
+            intent.putExtra(Const.KEY_ROOM_ID, room.id);
+            intent.putExtra(Const.KEY_ROOM_TITLE, room.title);
             startActivity(intent);
             finish();
         } else{

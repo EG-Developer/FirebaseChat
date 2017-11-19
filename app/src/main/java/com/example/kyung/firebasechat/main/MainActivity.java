@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                         for(String mail : mailKey){
                             User friend = new User();
                             Map map = (HashMap) dataSnapshot.child(mail).getValue();
-                            friend.id = (String) map.get(Const.key_id);
+                            friend.id = (String) map.get(Const.KEY_ID);
                             friend.email = (String) map.get(Const.key_email);
                             friend.token = (String) map.get(Const.key_token);
                             friend.phone_number = (String) map.get(Const.key_phone);

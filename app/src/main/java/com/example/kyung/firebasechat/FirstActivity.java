@@ -129,7 +129,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        permissionUtil.onResult(this,Const.per_code,grantResults);
+        permissionUtil.onResult(this,Const.PER_CODE,grantResults);
     }
 
     @Override

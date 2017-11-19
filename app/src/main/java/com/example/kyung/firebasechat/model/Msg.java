@@ -8,7 +8,7 @@ package com.example.kyung.firebasechat.model;
 public class Msg {
     public String id;
     public long idx;
-    public String msgText;
+    public String msg;
     public String user_email;
     public String name;
     public long time;
@@ -20,10 +20,10 @@ public class Msg {
     public Msg(){
 
     }
-    public Msg(String id, long idx, String msgText, String user_email, String name, long time, String type){
+    public Msg(String id, long idx, String msg, String user_email, String name, long time, String type){
         this.id = id;
         this.idx = idx;
-        this.msgText = msgText;
+        this.msg = msg;
         this.user_email = user_email;
         this.name = name;
         this.time = time;

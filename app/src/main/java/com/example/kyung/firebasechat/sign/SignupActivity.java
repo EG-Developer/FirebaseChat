@@ -101,7 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                 final String phone = editSignPhone.getText().toString().replace("-", "");
                 Intent intent = new Intent(SignupActivity.this, SignupNextActivity.class);
                 intent.putExtra(Const.key_phone, phone);
-                startActivityForResult(intent,Const.req_signup_first);
+                startActivityForResult(intent,Const.REQ_SIGNUP_FIRST);
 
                 // 중복체크는 나중에 다시 해볼 것.( 전화인증으로 해본 뒤 일단 그냥 진행)
 //                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -233,7 +233,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
-            case Const.req_signup_first:
+            case Const.REQ_SIGNUP_FIRST:
                 if(resultCode == RESULT_OK){
                     finish();
                 }

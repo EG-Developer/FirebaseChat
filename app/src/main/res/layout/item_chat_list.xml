@@ -19,22 +19,34 @@
         android:layout_height="@dimen/chat_list_text_height"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:ellipsize="end"
         android:gravity="center_vertical"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:maxLines="1"
+        android:text="title"
+        app:layout_constraintEnd_toStartOf="@+id/textMsgDate"
         app:layout_constraintStart_toEndOf="@+id/imageChatLst"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textMsgChatList"
         android:layout_width="0dp"
-        android:layout_height="@dimen/chat_list_text_height"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
-        android:text="TextView"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="msg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageChatLst"
         app:layout_constraintTop_toBottomOf="@+id/textTitleChatList" />
+
+    <TextView
+        android:id="@+id/textMsgDate"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/chat_list_text_height"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="5dp"
+        android:text="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

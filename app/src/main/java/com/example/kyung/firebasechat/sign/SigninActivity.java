@@ -93,7 +93,7 @@ public class SigninActivity extends AppCompatActivity {
                             FirebaseUser fUser = mAuth.getCurrentUser();
                             if(fUser.isEmailVerified()) {
                                 // preference에 값을 저장
-                                PreferenceUtil.setValue(getBaseContext(), Const.key_id, fUser.getUid());
+                                PreferenceUtil.setValue(getBaseContext(), Const.KEY_ID, fUser.getUid());
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_email, email);
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_password, password);
                                 PreferenceUtil.setValue(getBaseContext(), Const.key_auto_sign,"true");

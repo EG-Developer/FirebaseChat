@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -43,14 +44,13 @@ public class ChatDetailActivity extends AppCompatActivity {
     private Button btnSend;
 
     private Room room = null;
-    private String room_id;
     private User me;
-    private String myKey;
-    private List<User> roomMember = new ArrayList<>();
+    private List<String> roomMemberKey = new ArrayList<>();
     private Map<Long, Msg> msgAllList = new HashMap<>();
 
     private FirebaseDatabase database;
     private DatabaseReference myRoomRef;
+    private DatabaseReference userRef;
     private DatabaseReference msgRef;
 
     @Override
@@ -58,57 +58,27 @@ public class ChatDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_detail);
 
-        room_id = getIntent().getStringExtra(Const.key_room_id);
-        myKey = FormatUtil.changeMailFormat(PreferenceUtil.getString(this,Const.key_email));
-        roomMember.clear();
-
-        database = FirebaseDatabase.getInstance();
-        myRoomRef = database.getReference(Const.table_room).child(room_id);
-        msgRef = database.getReference(Const.table_msg).child(room_id);
-        loadRoomInfo();
-
+        init();
     }
 
-    private void loadRoomInfo(){
-        myRoomRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                room = new Room();
-                Map map = (HashMap) dataSnapshot.getValue();
-                msgAllList.clear();
-                room.id = room_id;
-                room.title = (String) map.get(Const.key_room_title);
+    private void init(){
+        String roomId = getIntent().getStringExtra(Const.KEY_ROOM_ID);
+        String myRoomTitle = getIntent().getStringExtra(Const.KEY_ROOM_TITLE);
+        roomMemberKey.clear();
+        msgAllList.clear();
 
-                DataSnapshot snapshotMember = dataSnapshot.child(Const.table_member);
-                for(DataSnapshot snapshot : snapshotMember.getChildren()){
-                    User user = snapshot.getValue(User.class);
-                    if(FormatUtil.changeMailFormat(user.email).equals(myKey)){
-                        me=user;
-                    }
-                    roomMember.add(user);
-                }
-                if(me == null){
-                    Toast.makeText(ChatDetailActivity.this, "방 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+        database = FirebaseDatabase.getInstance();
+        myRoomRef = database.getReference(Const.table_room).child(roomId);
+        msgRef = database.getReference(Const.table_msg).child(roomId);
+        userRef = database.getReference(Const.table_user);
 
-                // 모든 작업이 끝난 후 view 및 listener 를 init
-                initView();
-                setRecyclerChatAdapter();
-                setMsgListener();
-                setSendMsg();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ChatDetailActivity.this, "채팅방 불러오기 실패", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
+        initView(myRoomTitle);
+        setRecyclerChatAdapter();
+        setSendMsg();
     }
 
     private void setMsgListener(){
-        if(room != null) msgRef.addValueEventListener(msgValueEventListener);
+        msgRef.addValueEventListener(msgValueEventListener);
     }
     private void removeMsgListener(){
         msgRef.removeEventListener(msgValueEventListener);
@@ -116,9 +86,9 @@ public class ChatDetailActivity extends AppCompatActivity {
     ValueEventListener msgValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
+            if(dataSnapshot == null) return;
             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                 Msg msg = snapshot.getValue(Msg.class);
-
                 if(msgAllList.containsKey(msg.idx)) continue;
                 else {
                     msgAllList.put(msg.idx, msg);
@@ -134,7 +104,46 @@ public class ChatDetailActivity extends AppCompatActivity {
         }
     };
 
-    private void initView() {
+    private void setMyRoomListener(){
+        myRoomRef.addValueEventListener(roomValueEventListener);
+    }
+    private void removeMyRoomListener(){
+        myRoomRef.removeEventListener(roomValueEventListener);
+    }
+    ValueEventListener roomValueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            room = new Room();
+            Map roomMap = (HashMap) dataSnapshot.getValue();
+            room.id = (String) roomMap.get(Const.KEY_ID);
+            room.title = (String) roomMap.get(Const.KEY_ROOM_TITLE);
+            room.creation_time = (long) roomMap.get(Const.KEY_ROOM_CREATIONTIME);
+
+            String myKey = FormatUtil.changeMailFormat(PreferenceUtil.getString(ChatDetailActivity.this,Const.key_email));
+            DataSnapshot snapshotMember = dataSnapshot.child(Const.table_member);
+
+            roomMemberKey.clear();
+            for(DataSnapshot snapshot : snapshotMember.getChildren()){
+                User user = snapshot.getValue(User.class);
+                if(snapshot.getKey().equals(myKey)){
+                    me=user;
+                }
+                roomMemberKey.add(snapshot.getKey());
+            }
+            if(me == null){
+                Toast.makeText(ChatDetailActivity.this, "방 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Toast.makeText(ChatDetailActivity.this, "불러오기 실패", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    };
+
+    private void initView(String myRoomTitle) {
         toolbarChat = findViewById(R.id.toolbarChat);
         recyclerChat =  findViewById(R.id.recyclerChat);
         btnType = findViewById(R.id.btnType);
@@ -142,10 +151,10 @@ public class ChatDetailActivity extends AppCompatActivity {
         editMsg = findViewById(R.id.editMsg);
         btnSend =  findViewById(R.id.btnSend);
         setSupportActionBar(toolbarChat);
-        if("".equals(room.title) || room.title == null){
+        if("".equals(myRoomTitle) || myRoomTitle == null){
             getSupportActionBar().setTitle("Fail");
         } else {
-            getSupportActionBar().setTitle(room.title);
+            getSupportActionBar().setTitle(myRoomTitle);
         }
 
     }
@@ -157,9 +166,10 @@ public class ChatDetailActivity extends AppCompatActivity {
 
     private void setSendMsg(){
         btnSend.setOnClickListener(view ->{
+            if(me == null || room == null) return;
             String msgText = editMsg.getText().toString();
             if(!"".equals(msgText) && msgText != null){
-                String id = room_id;
+                String id = room.id;
                 long idx = adapter.getItemCount()+1;
                 String user_email = me.email;
                 String name = me.name;
@@ -168,9 +178,24 @@ public class ChatDetailActivity extends AppCompatActivity {
                 Msg msg = new Msg(id, idx, msgText, user_email, name, time, type);
                 msgRef.child(idx+"").setValue(msg);
 
+                // room 정보를 수정
+                addMsgInfoToRoom(msgText, time, idx);
+
                 editMsg.setText("");
             }
         });
+    }
+
+    private void addMsgInfoToRoom(String msgText, long msgTime, long count){
+        myRoomRef.child(Const.KEY_ROOM_LASTMSG).setValue(msgText);
+        myRoomRef.child(Const.KEY_ROOM_LASTMSG_TIME).setValue(msgTime);
+        myRoomRef.child(Const.KEY_ROOM_COUNT).setValue(count);
+
+        for(String key : roomMemberKey){
+            userRef.child(key).child(Const.table_room).child(room.id).child(Const.KEY_ROOM_LASTMSG).setValue(msgText);
+            userRef.child(key).child(Const.table_room).child(room.id).child(Const.KEY_ROOM_LASTMSG_TIME).setValue(msgTime);
+            userRef.child(key).child(Const.table_room).child(room.id).child(Const.KEY_ROOM_COUNT).setValue(count);
+        }
     }
 
     @Override
@@ -197,15 +222,19 @@ public class ChatDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 엑티비티가 Resume, Pause 할때 Listener를 부착 및 해제
+     */
     @Override
     protected void onResume() {
         super.onResume();
+        setMyRoomListener();
         setMsgListener();
     }
-
     @Override
     protected void onPause() {
         super.onPause();
+        removeMyRoomListener();
         removeMsgListener();
     }
 

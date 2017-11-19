@@ -38,7 +38,7 @@ public class PermissionUtil {
         }
         // 승인이 되어 있지 않으면 승인요청, 되어 있으면 init을 callback으로 실행
         if(requires.size()>0){
-            activity.requestPermissions(permissions, Const.per_code);
+            activity.requestPermissions(permissions, Const.PER_CODE);
         } else {
             callInit(activity);
         }
@@ -53,7 +53,7 @@ public class PermissionUtil {
     }
     // 결과 실행(퍼미션 승인되면 실행)
     public void onResult(Activity activity, int requestCode, int grantResult[]){
-        if(requestCode == Const.per_code){
+        if(requestCode == Const.PER_CODE){
             boolean check = true;
             for(int grant : grantResult){
                 if(grant != PackageManager.PERMISSION_GRANTED){

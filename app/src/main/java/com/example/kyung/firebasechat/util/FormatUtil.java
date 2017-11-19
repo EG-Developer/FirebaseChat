@@ -18,7 +18,7 @@ public class FormatUtil {
         return phone.replace("-","");
     }
 
-    // long형 시간과 타임 format을 받아 HH:mm 으로 변환
+    // long형 시간과 타임 format을 받아 format 형태로 변환
     // time format종류 => yyyy MM dd HH mm ss
     public static String changeTimeFormat(long time, String timeFormat){
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat);

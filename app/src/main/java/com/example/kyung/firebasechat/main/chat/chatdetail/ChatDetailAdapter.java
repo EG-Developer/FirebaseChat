@@ -66,7 +66,7 @@ public class ChatDetailAdapter extends RecyclerView.Adapter<ChatDetailAdapter.Ho
         holder.setUserEmail(msg.user_email);
 //        long count = msg.received_count-msg.read_count;
 //        holder.setTextCount(count+"");
-        holder.setTextMsg(msg.msgText);
+        holder.setTextMsg(msg.msg);
         holder.setTextTime(FormatUtil.changeTimeFormat(msg.time,"HH:mm"));
 
         if(!msg.user_email.equals(myEmail)){

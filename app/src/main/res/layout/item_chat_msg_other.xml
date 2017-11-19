@@ -26,24 +26,17 @@
         app:layout_constraintStart_toEndOf="@+id/image_profile"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textMsg"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        app:cardCornerRadius="8dp"
+        android:maxWidth="@dimen/chat_text_msg_max_width"
+        android:text="Msg"
+        android:textSize="@dimen/chat_text_msg_size"
+        android:background="@drawable/greenleft"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toEndOf="@+id/image_profile"
-        app:layout_constraintTop_toBottomOf="@+id/textMemberName">
-
-        <TextView
-            android:id="@+id/textMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="@dimen/chat_text_msg_max_width"
-            android:text="Msg"
-            android:textSize="@dimen/chat_text_msg_size" />
-    </android.support.v7.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@+id/textMemberName" />
 
     <TextView
         android:id="@+id/textTime"
@@ -53,7 +46,7 @@
         android:text="time"
         android:textSize="@dimen/chat_text_time_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView" />
+        app:layout_constraintStart_toEndOf="@+id/textMsg" />
 
     <TextView
         android:id="@+id/textCount"
@@ -62,6 +55,6 @@
         android:layout_marginStart="8dp"
         android:textSize="@dimen/chat_text_count_size"
         app:layout_constraintBottom_toTopOf="@+id/textTime"
-        app:layout_constraintStart_toEndOf="@+id/cardView" />
+        app:layout_constraintStart_toEndOf="@+id/textMsg" />
 
 </android.support.constraint.ConstraintLayout>
