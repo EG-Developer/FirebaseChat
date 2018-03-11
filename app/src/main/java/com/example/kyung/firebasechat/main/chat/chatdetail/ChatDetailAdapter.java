@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
-import com.example.kyung.firebasechat.model.Msg;
+import com.example.kyung.firebasechat.domain.model.Msg;
 import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
 

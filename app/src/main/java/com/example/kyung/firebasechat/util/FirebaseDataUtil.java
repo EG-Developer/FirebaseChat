@@ -1,21 +1,5 @@
 package com.example.kyung.firebasechat.util;
 
-import android.content.Context;
-
-import com.example.kyung.firebasechat.Const;
-import com.example.kyung.firebasechat.model.Room;
-import com.example.kyung.firebasechat.model.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * 파이어베이스 유틸... 일단 보류
  */

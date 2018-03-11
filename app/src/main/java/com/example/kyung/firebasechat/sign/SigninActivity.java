@@ -83,8 +83,6 @@ public class SigninActivity extends AppCompatActivity {
      * @param password
      */
     private void signin(final String email, final String password){
-        Log.e("email","========================="+email);
-        Log.e("password","==================="+password);
         mAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

@@ -1,11 +1,8 @@
 package com.example.kyung.firebasechat.main.chat;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kyung.firebasechat.R;
-import com.example.kyung.firebasechat.model.Room;
+import com.example.kyung.firebasechat.domain.model.Room;
 import com.example.kyung.firebasechat.util.FormatUtil;
 
 import java.util.ArrayList;

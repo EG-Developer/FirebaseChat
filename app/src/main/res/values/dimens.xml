@@ -12,5 +12,6 @@
     <dimen name="chat_text_time_size">10sp</dimen>
     <dimen name="chat_text_msg_max_width">300dp</dimen>
     <dimen name="chat_input_size">40dp</dimen>
+    <dimen name="chat_input_max_height">80dp</dimen>
 
 </resources>

@@ -53,9 +53,11 @@
     <EditText
         android:id="@+id/editMsg"
         android:layout_width="0dp"
-        android:layout_height="@dimen/chat_input_size"
+        android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine|textPersonName"
+        android:maxHeight="@dimen/chat_input_max_height"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:theme="@style/EditTextStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSend"

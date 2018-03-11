@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
-import com.example.kyung.firebasechat.model.User;
+import com.example.kyung.firebasechat.domain.model.User;
 import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.DialogUtil;
 import com.example.kyung.firebasechat.util.ValidationUtil;

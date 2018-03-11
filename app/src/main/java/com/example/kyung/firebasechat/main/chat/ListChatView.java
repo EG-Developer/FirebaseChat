@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import com.example.kyung.firebasechat.Const;
 import com.example.kyung.firebasechat.R;
 import com.example.kyung.firebasechat.main.chat.chatdetail.ChatDetailActivity;
-import com.example.kyung.firebasechat.model.Room;
+import com.example.kyung.firebasechat.domain.model.Room;
 import com.example.kyung.firebasechat.util.FormatUtil;
 import com.example.kyung.firebasechat.util.PreferenceUtil;
 import com.google.firebase.database.DataSnapshot;

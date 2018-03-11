@@ -1,4 +1,4 @@
-package com.example.kyung.firebasechat.model;
+package com.example.kyung.firebasechat.domain.model;
 
 import com.google.firebase.database.Exclude;
 

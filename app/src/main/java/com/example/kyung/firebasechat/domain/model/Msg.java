@@ -1,4 +1,4 @@
-package com.example.kyung.firebasechat.model;
+package com.example.kyung.firebasechat.domain.model;
 
 /**
  * Created by Kyung on 2017-11-07.
