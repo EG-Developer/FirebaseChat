@@ -1,26 +1,12 @@
-# 제목
-  - 구성1
-  - 구성2
+# FireBase 기반의 간다한 Chatting App
+  - 주요 기능 : 로그인, 친구목록, 방 생성, 채팅
 
 ---
 
-## 구성1
-  ### 1. 소제목 및 엑티비티 구성
-  - 내용
+## 데이터 구조
 
-  > dfdf.java
+![](https://github.com/Lee-KyungSeok/FirebaseChat/blob/master/DataStructure.png)
 
-  ``java
+## 주요 기능
 
-  ```
-
----
-
-## 참고 개념
-  ### 1. 참고
-  - 내용
-
----
-
-## 참고 문헌
-  ### 1. [링크]()
+![](https://github.com/Lee-KyungSeok/FirebaseChat/blob/master/function.png)
